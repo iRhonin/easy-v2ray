@@ -2,7 +2,7 @@
 
 Install and Config a V2Ray server with one script
 
-## Prerequisite
+## Prerequisites
 
 - A Domain
 - A VPS with **root access** and Debian Based OS (Ubuntu, Debian, ...)
