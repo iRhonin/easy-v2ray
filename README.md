@@ -1,24 +1,31 @@
-### Easy X-UI Script
+# Easy X-UI Script
 
-### Install and Config a V2Ray server with one script
+Install and Config a V2Ray server with one script
 
-### Usage
+## Prerequisite
 
-#### 1. Set a A DNS Record to your VPS's IP
+- A Domain
+- A VPS with **root access** and Debian Based OS (Ubuntu, Debian, ...)
+- Python >= 3.8
+- Linux
 
-If you using a Cloudflare or ArvanCloud or any similar service, MAKE SURE THE CLOUD FLAG IS DISABLED
+## Usage
+
+### 1. Set a A DNS Record to your VPS's IP
 
 For example:
 
 `yourdomain.com >> 1.2.3.4 (Your VPS IP)`
 
-#### 2. Clone this repo
+\*If you using Cloudflare or ArvanCloud or similar services, MAKE SURE THE CLOUD FLAG IS DISABLED!
+
+### 2. Clone this repo
 
 ```bash
 git clone https://github.com/iRhonin/easy-v2ray.git
 ```
 
-#### 3. Set variables
+### 3. Set variables
 
 Copy `.env.example` to `.env` and set the variables.
 
@@ -27,7 +34,7 @@ cp .env.example .env
 # Edit .env
 ```
 
-#### 4. Run Script
+### 4. Run Script
 
 ```bash
 bash install.sh
