@@ -17,7 +17,7 @@ For example:
 
 `yourdomain.com >> 1.2.3.4 (Your VPS IP)`
 
-\*If you using Cloudflare or ArvanCloud or similar services, MAKE SURE THE CLOUD FLAG IS DISABLED!
+\*If you using Cloudflare or ArvanCloud or similar services, **MAKE SURE THE CLOUD FLAG IS DISABLED**!
 
 ### 2. Clone this repo
 
