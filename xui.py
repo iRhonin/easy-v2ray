@@ -106,9 +106,6 @@ class Xui:
         }
 
         response = self.post("/xui/setting/update", data=data, verify=False,)
-        from pudb import set_trace
-
-        set_trace()
         self.ssl_enabled = True
         print("Restart x-ui to apply ssl")
 

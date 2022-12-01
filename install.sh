@@ -8,7 +8,6 @@ PASSWORD_FILE=.password
 echo $PASSWORD | sed 's/"//g' > .password
 
 cleanup() {
-  echo "Removing .password"
   rm  -r $PASSWORD_FILE
 }
 
@@ -37,6 +36,10 @@ ssh_ "~/.acme.sh/acme.sh --installcert -d $DOMAIN --key-file /root/private.key -
 
 echo "Got Free SSL Certificate using Let’s Encrypt"
 
+# Optimizing
+ssh_ \
+    "curl https://raw.githubusercontent.com/iRhonin/easy-v2ray/master/sysctl/local.conf -o /etc/sysctl.d/local.conf && sysctl --system"
+
 # Install X-UI
 ssh_ "echo 'n' | bash <(curl -Ls https://raw.githubusercontent.com/hossinasaadi/x-ui/master/install.sh)"
 echo "Installed X-UI"
@@ -59,16 +62,12 @@ echo "Restart x-ui"
 sleep 3
 
 # Change password
-XPASSWORD=$(python3 cli.py change-password | grep -Po '(?<=PASSWORD: )[^P]*')
-echo "X-ui URL: $DOMAIN:$XPORT"
-echo "X-ui User: $XUSER"
-echo "X-ui PASSWORD: $XPASSWORD"
+xui=$(python3 cli.py change-password)
+echo $xui
+XPASSWORD=$(echo $xui  | grep -Po '(?<=PASSWORD: )[^ ]*')
 
 # Setup configs
 python3 cli.py add-vmess 80 ws
 python3 cli.py add-vless-tls 443 wss
 python3 cli.py add-trojan 995
 
-# Optimizing
-ssh_ \
-    "curl https://raw.githubusercontent.com/iRhonin/easy-v2ray/master/sysctl/local.conf -o /etc/sysctl.d/local.conf && sysctl --system"
