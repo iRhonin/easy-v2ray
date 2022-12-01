@@ -37,6 +37,7 @@ class Xui:
         self.user = user
         self.password = password
         self.remark = remark
+        self.session = None
 
         self.login()
 
@@ -70,7 +71,7 @@ class Xui:
         }
 
     def post(self, url, *args, **kwargs):
-        _url = parse(self.host, url)
+        _url = parse.urljoin(self.host, url)
         return requests.post(
             _url, *args, headers=self.headers, cookies=self.cookies, **kwargs
         )
