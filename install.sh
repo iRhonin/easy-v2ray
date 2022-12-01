@@ -1,14 +1,26 @@
-#! /usr/bin/bash
+#!/bin/sh
 
 set -e
 
 export $(cat .env)
 
+PASSWORD_FILE=.password
+echo $PASSWORD | sed 's/"//g' > .password
+
+cleanup() {
+  echo "Removing .password"
+  rm  -r $PASSWORD_FILE
+}
+
+trap cleanup EXIT
+
+alias ssh_="sshpass -f $PASSWORD_FILE ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP"
+
 # Install sshpass
 sudo apt install sshpass -y
 
 # Install deps
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP "apt install curl socat fail2ban -y"
+ssh_ "apt install curl socat fail2ban -y"
 echo "Installed depps"
 
 # Install Acme Script
