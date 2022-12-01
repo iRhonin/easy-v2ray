@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -14,7 +14,9 @@ cleanup() {
 
 trap cleanup EXIT
 
-alias ssh_="sshpass -f $PASSWORD_FILE ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP"
+function ssh_ () {
+    sshpass -f $PASSWORD_FILE ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP $1
+}
 
 # Install sshpass
 sudo apt install sshpass -y
@@ -24,20 +26,19 @@ ssh_ "apt install curl socat fail2ban -y"
 echo "Installed depps"
 
 # Install Acme Script
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP "curl https://get.acme.sh | sh"
+ssh_ "curl https://get.acme.sh | sh"
 echo "Install Acme Script"
 
 # Get Free SSL Certificate using Let’s Encrypt
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP "~/.acme.sh/acme.sh --set-default-ca --server letsencrypt"
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP "~/.acme.sh/acme.sh --register-account -m xxxx@xxxx.com"
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP "~/.acme.sh/acme.sh --issue -d $DOMAIN --standalone"
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP \
-    "~/.acme.sh/acme.sh --installcert -d $DOMAIN --key-file /root/private.key --fullchain-file /root/cert.crt"
+ssh_ "~/.acme.sh/acme.sh --set-default-ca --server letsencrypt"
+ssh_ "~/.acme.sh/acme.sh --register-account -m xxxx@xxxx.com"
+ssh_ "~/.acme.sh/acme.sh --issue -d $DOMAIN --standalone"
+ssh_ "~/.acme.sh/acme.sh --installcert -d $DOMAIN --key-file /root/private.key --fullchain-file /root/cert.crt"
 
 echo "Got Free SSL Certificate using Let’s Encrypt"
 
 # Install X-UI
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP "echo 'n' | bash <(curl -Ls https://raw.githubusercontent.com/hossinasaadi/x-ui/master/install.sh)"
+ssh_ "echo 'n' | bash <(curl -Ls https://raw.githubusercontent.com/hossinasaadi/x-ui/master/install.sh)"
 echo "Installed X-UI"
 
 # Setup venv
@@ -52,15 +53,16 @@ SSL_ENABLED=TRUE
 echo "Setup SSL"
 
 # Restart x-ui
-echo $PASSWORD
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP "x-ui restart"
+ssh_ "x-ui restart"
 echo "Restart x-ui"
 
 sleep 3
 
 # Change password
 XPASSWORD=$(python3 cli.py change-password | grep -Po '(?<=PASSWORD: )[^P]*')
-echo "New Password: $XPASSWORD"
+echo "X-ui URL: $DOMAIN:$XPORT"
+echo "X-ui User: $XUSER"
+echo "X-ui PASSWORD: $XPASSWORD"
 
 # Setup configs
 python3 cli.py add-vmess 80 ws
@@ -68,5 +70,5 @@ python3 cli.py add-vless-tls 443 wss
 python3 cli.py add-trojan 995
 
 # Optimizing
-sshpass -p $PASSWORD ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP \
+ssh_ \
     "curl https://raw.githubusercontent.com/iRhonin/easy-v2ray/master/sysctl/local.conf -o /etc/sysctl.d/local.conf && sysctl --system"

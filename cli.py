@@ -1,7 +1,7 @@
 import typer
 from dotenv import load_dotenv
 
-from xui import Xui
+from xui import Xui, generate_password
 
 load_dotenv()
 app = typer.Typer(add_completion=False)

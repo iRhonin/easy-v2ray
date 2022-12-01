@@ -106,6 +106,9 @@ class Xui:
         }
 
         response = self.post("/xui/setting/update", data=data, verify=False,)
+        from pudb import set_trace
+
+        set_trace()
         self.ssl_enabled = True
         print("Restart x-ui to apply ssl")
 
@@ -182,7 +185,7 @@ class Xui:
             "protocol": "vless",
             "settings": '{\n "clients": [\n {\n "id": "%s",\n "flow": "xtls-rprx-direct",\n "email": "",\n "limitIp": 0,\n "totalGB": 0,\n "expiryTime": ""\n }\n ],\n "decryption": "none",\n "fallbacks": []\n}'
             % uuid,
-            "streamSettings": '{\n "network": "ws",\n "security": "tls",\n "tlsSettings": {\n "serverName": "%s",\n "certificates": [\n {\n "certificateFile": %s,\n "keyFile": %s\n }\n ],\n "alpn": []\n },\n "wsSettings": {\n "acceptProxyProtocol": false,\n "path": "%s",\n "headers": {}\n }\n}'
+            "streamSettings": '{\n "network": "ws",\n "security": "tls",\n "tlsSettings": {\n "serverName": "%s",\n "certificates": [\n {\n "certificateFile": "%s",\n "keyFile": "%s"\n }\n ],\n "alpn": []\n },\n "wsSettings": {\n "acceptProxyProtocol": false,\n "path": "%s",\n "headers": {}\n }\n}'
             % (self.domain, self.cert_path, self.private_path, _path),
             "sniffing": '{\n "enabled": true,\n "destOverride": [\n "http",\n "tls"\n ]\n}',
         }
@@ -207,7 +210,7 @@ class Xui:
             "protocol": "trojan",
             "settings": '{\n  "clients": [\n    {\n      "password": "%s",\n      "flow": "xtls-rprx-direct"\n    }\n  ],\n  "fallbacks": []\n}'
             % password,
-            "streamSettings": '{\n  "network": "tcp",\n  "security": "tls",\n  "tlsSettings": {\n    "serverName": "%s",\n    "certificates": [\n      {\n        "certificateFile": %s,\n        "keyFile": %s\n      }\n    ],\n    "alpn": []\n  },\n  "tcpSettings": {\n    "acceptProxyProtocol": false,\n    "header": {\n      "type": "none"\n    }\n  }\n}'
+            "streamSettings": '{\n  "network": "tcp",\n  "security": "tls",\n  "tlsSettings": {\n    "serverName": "%s",\n    "certificates": [\n      {\n        "certificateFile": "%s",\n        "keyFile": "%s"\n      }\n    ],\n    "alpn": []\n  },\n  "tcpSettings": {\n    "acceptProxyProtocol": false,\n    "header": {\n      "type": "none"\n    }\n  }\n}'
             % (self.domain, self.cert_path, self.private_path),
             "sniffing": '{\n  "enabled": true,\n  "destOverride": [\n    "http",\n    "tls"\n  ]\n}',
         }
