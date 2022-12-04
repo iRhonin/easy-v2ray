@@ -145,7 +145,8 @@ class Xui:
         response = self.post("/xui/inbound/add", data=data)
         config = {
             "add": self.domain,
-            "aid": 0,
+            "aid": "0",
+            "alpn":"",
             "host": self.domain,
             "id": str(uuid),
             "net": "ws",
@@ -154,8 +155,9 @@ class Xui:
             "ps": name,
             "scy": "aes-128-gcm",
             "tls": "none",
-            "type": "none",
-            "v": 2,
+            "sni":"",
+            "type":"",
+            "v": "2",
         }
         link = (
             "vmess://"

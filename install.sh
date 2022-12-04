@@ -38,7 +38,7 @@ echo "Got Free SSL Certificate using Let’s Encrypt"
 
 # Optimizing
 ssh_ \
-    "curl https://raw.githubusercontent.com/iRhonin/easy-v2ray/master/sysctl/local.conf -o /etc/sysctl.d/local.conf && sysctl --system"
+   "curl https://raw.githubusercontent.com/iRhonin/easy-v2ray/master/sysctl/local.conf -o /etc/sysctl.d/local.conf && sysctl --system"
 
 # Install X-UI
 ssh_ "echo 'n' | bash <(curl -Ls https://raw.githubusercontent.com/hossinasaadi/x-ui/master/install.sh)"
