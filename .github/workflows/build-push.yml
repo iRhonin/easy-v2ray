@@ -36,8 +36,6 @@ jobs:
           context: .
           push: true
           tags: master
-          build-args: |
-            ENVIRONMENT=${ENVIRONMENT}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new # mode=max: https://github.com/docker/buildx#--cache-tonametypetypekeyvalue
 
