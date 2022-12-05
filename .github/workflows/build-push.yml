@@ -21,7 +21,7 @@ jobs:
       - id: image_id
         name: Generate Image ID
         run: |
-          echo "::set-output name=image_id::${{ env.REGISTRY }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]'):${{ github.sha }}"
+          echo "::set-output name=image_id::${{ env.REGISTRY }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
 
       - name: Login to GitHub Container Registry
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login -u ${{ github.repository_owner }} --password-stdin ${{ env.REGISTRY }}
