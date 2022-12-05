@@ -34,9 +34,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          target: ${{ env.TARGET_LAYER }}
           push: true
-          tags: ${{ steps.image_id.outputs.image_id }}
+          tags: master
           build-args: |
             ENVIRONMENT=${ENVIRONMENT}
           cache-from: type=local,src=/tmp/.buildx-cache
