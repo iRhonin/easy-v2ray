@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -13,7 +13,7 @@ cleanup() {
 
 trap cleanup EXIT
 
-function ssh_ () {
+ssh_ () {
     sshpass -f $PASSWORD_FILE ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP $1
 }
 
@@ -46,7 +46,7 @@ echo "Installed X-UI"
 
 # Setup venv
 python3 -m venv .venv
-source .venv/bin/activate
+. .venv/bin/activate
 pip3 install -r requirements.txt
 echo "Setup venv"
 
