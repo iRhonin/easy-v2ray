@@ -2,7 +2,10 @@
 
 set -e
 
-export $(cat .env)
+if [ -f .env ]; then
+    export $(cat .env)
+fi
+
 
 PASSWORD_FILE=.password
 echo $PASSWORD | sed 's/"//g' > .password
@@ -17,8 +20,7 @@ ssh_ () {
     sshpass -f $PASSWORD_FILE ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP $1
 }
 
-# Install sshpass
-sudo apt install sshpass -y
+
 
 # Install deps
 ssh_ "apt install curl socat fail2ban -y"
