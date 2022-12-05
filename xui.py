@@ -123,7 +123,7 @@ class Xui:
     def add_vmess(self, port, path="ws"):
         uuid = str(uuid4())
         _path = "/" + path
-        name = self.remark + "VMess"
+        name = self.remark + '_' + "VMess"
 
         data = {
             "up": "0",
@@ -170,7 +170,7 @@ class Xui:
     def add_vless_tls(self, port, path="ws"):
         uuid = str(uuid4())
         _path = "/" + path
-        name = self.remark + "VLess-TLS"
+        name = self.remark + '_' + "VLess-TLS"
 
         data = {
             "up": "0",
@@ -190,12 +190,12 @@ class Xui:
         }
 
         response = self.post("/xui/inbound/add", data=data)
-        link = f"vless://{uuid}@{self.domain}:{port}?path={_path}&security=tls&encryption=none&type=ws&sni={self.domain}#{name}"
+        link = f"vless://{uuid}@{self.domain}:{port}?path={parse.urlencode(_path)}&security=tls&encryption=none&type=ws&sni={self.domain}#{parse.urlencode(name)}"
         print(link)
 
     def add_trojan(self, port):
         password = generate_password()
-        name = self.remark + "Trojan"
+        name = self.remark + '_' + "Trojan"
 
         data = {
             "up": "0",
@@ -214,5 +214,5 @@ class Xui:
             "sniffing": '{\n  "enabled": true,\n  "destOverride": [\n    "http",\n    "tls"\n  ]\n}',
         }
         response = self.post("/xui/inbound/add", data=data)
-        link = f"trojan://{password}@{self.domain}:{port}?sni={self.domain}#{name}"
+        link = f"trojan://{password}@{self.domain}:{port}?sni={self.domain}#{parse.urlencode(name)}"
         print(link)
