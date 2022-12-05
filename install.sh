@@ -17,8 +17,7 @@ ssh_ () {
     sshpass -f $PASSWORD_FILE ssh -o StrictHostKeychecking=no -o PubkeyAuthentication=false -t $USER@$IP $1
 }
 
-# Install sshpass
-sudo apt install sshpass -y
+
 
 # Install deps
 ssh_ "apt install curl socat fail2ban -y"

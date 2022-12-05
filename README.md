@@ -11,7 +11,7 @@ Install and Config a V2Ray server with one script
 
 ## Usage
 
-### 1. Set a A DNS Record to your VPS's IP
+### Set a A DNS Record to your VPS's IP
 
 For example:
 
@@ -19,13 +19,19 @@ For example:
 
 \*If you using Cloudflare or ArvanCloud or similar services, **MAKE SURE THE CLOUD FLAG IS DISABLED**!
 
-### 2. Clone this repo
+### Clone this repo
 
 ```bash
 git clone https://github.com/iRhonin/easy-v2ray.git
 ```
 
-### 3. Set variables
+### Install sshpass
+
+```bash
+sudo apt install sshpass -y
+```
+
+### Set variables
 
 Copy `.env.example` to `.env` and set the variables.
 
@@ -34,13 +40,13 @@ cp .env.example .env
 # Edit .env
 ```
 
-### 4. Run Script
+### Run Script
 
 ```bash
 /bin/sh install.sh
 ```
 
-### 5. Done!
+### Done!
 
 You now have VMess, VLess-TLS and Trojan configs!
 
