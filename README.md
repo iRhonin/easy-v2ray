@@ -37,7 +37,7 @@ cp .env.example .env
 ### 4. Run Script
 
 ```bash
-bash install.sh
+/bin/sh install.sh
 ```
 
 ### 5. Done!
