@@ -68,6 +68,10 @@ xui=$(python3 cli.py change-password)
 echo $xui
 XPASSWORD=$(echo $xui  | grep -Po '(?<=PASSWORD: )[^ ]*')
 
+# Install cron job to restart x-ui every 12 hours, due to memory leak
+ssh_ 'cat <(crontab -l) <(echo "0 */12 * * * /usr/bin/x-ui restart") | crontab -'
+echo "cron job installed"
+
 # Setup configs
 python3 cli.py add-vmess 80 ws
 python3 cli.py add-vless-tls 443 wss
