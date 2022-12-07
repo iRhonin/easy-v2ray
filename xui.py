@@ -190,7 +190,7 @@ class Xui:
         }
 
         response = self.post("/xui/inbound/add", data=data)
-        link = f"vless://{uuid}@{self.domain}:{port}?path={parse.urlencode(_path)}&security=tls&encryption=none&type=ws&sni={self.domain}#{parse.urlencode(name)}"
+        link = f"vless://{uuid}@{self.domain}:{port}?path={parse.quote_plus(_path)}&security=tls&encryption=none&type=ws&sni={self.domain}#{parse.quote_plus(name)}"
         print(link)
 
     def add_trojan(self, port):
@@ -214,5 +214,5 @@ class Xui:
             "sniffing": '{\n  "enabled": true,\n  "destOverride": [\n    "http",\n    "tls"\n  ]\n}',
         }
         response = self.post("/xui/inbound/add", data=data)
-        link = f"trojan://{password}@{self.domain}:{port}?sni={self.domain}#{parse.urlencode(name)}"
+        link = f"trojan://{password}@{self.domain}:{port}?sni={self.domain}#{parse.quote_plus(name)}"
         print(link)
